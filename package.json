@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "devDependencies": {
     "@sap/cds-dk": "^9.7.2",
-    "rimraf": "^5.0.5",
-    "mbt": "^1.2.29"
+    "mbt": "^1.2.29",
+    "rimraf": "^5.0.5"
   },
   "dependencies": {
     "@cap-js/sqlite": "^2.2.0",
@@ -15,7 +15,8 @@
     "app/authors",
     "app/authors",
     "app/products",
-    "app/authors"
+    "app/authors",
+    "app/author"
   ],
   "scripts": {
     "undeploy": "cf undeploy capProject --delete-services --delete-service-keys --delete-service-brokers",

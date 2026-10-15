@@ -1,4 +1,2 @@
 
-
-
-using from './authors/annotations';
+using from './author/annotations';
