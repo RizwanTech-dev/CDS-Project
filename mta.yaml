@@ -59,6 +59,36 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: capProject-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: capProject-destination-service
+    parameters:
+      content-target: true
+  - name: capProject-repo-host
+    parameters:
+      service-key:
+        name: capProject-repo-host-key
+  - name: uaa_capProject
+    parameters:
+      service-key:
+        name: uaa_capProject-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: cds_approuter_capProject_repo_host
+          ServiceInstanceName: capProject-html5-service
+          ServiceKeyName: capProject-repo-host-key
+          sap.cloud.service: cds_approuter
+        - Authentication: OAuth2UserTokenExchange
+          Name: cds_approuter_uaa_capProject
+          ServiceInstanceName: capProject-xsuaa-service
+          ServiceKeyName: uaa_capProject-key
+          sap.cloud.service: cds_approuter
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
 resources:
 - name: capProject-db
   type: com.sap.xs.hdi-container
@@ -75,20 +105,18 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: false
-      init_data:
-        instance:
-          destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
+      HTML5Runtime_enabled: true
       version: 1.0.0
     service: destination
     service-name: capProject-destination-service
     service-plan: lite
+- name: uaa_capProject
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: capProject-xsuaa-service
+    service-plan: application
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

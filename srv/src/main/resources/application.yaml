@@ -3,8 +3,15 @@
 spring:
   config.activate.on-profile: default
   sql.init.platform: h2
+
 cds:
-  data-source.auto-config.enabled: false
+  security:
+    authentication:
+      authConfig:
+        enabled: false
+  data-source:
+    auto-config:
+      enabled: false
 ---
 management:
   endpoint:
