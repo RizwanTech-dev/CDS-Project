@@ -35,53 +35,23 @@ modules:
     builder: custom
     commands:
     - npm run build
-- name: capProject-destination-content
-  type: com.sap.application.content
-  requires:
-  - name: capProject-destination-service
-    parameters:
-      content-target: true
-  - name: capProject_html_repo_host
-    parameters:
-      service-key:
-        name: capProject_html_repo_host-key
-  - name: uaa_capProject
-    parameters:
-      service-key:
-        name: uaa_capProject-key
-  parameters:
-    content:
-      instance:
-        destinations:
-        - Name: cds_approuter_capProject_html_repo_host
-          ServiceInstanceName: capProject-html5-app-host-service
-          ServiceKeyName: capProject_html_repo_host-key
-          sap.cloud.service: cds_approuter
-        - Authentication: OAuth2UserTokenExchange
-          Name: cds_approuter_uaa_capProject
-          ServiceInstanceName: capProject-xsuaa-service
-          ServiceKeyName: uaa_capProject-key
-          sap.cloud.service: cds_approuter
-        existing_destinations_policy: ignore
-  build-parameters:
-    no-source: true
 - name: capProject-app-content
   type: com.sap.application.content
   path: .
   requires:
-  - name: capProject_html_repo_host
+  - name: capProject-repo-host
     parameters:
       content-target: true
   build-parameters:
     build-result: resources
     requires:
     - artifacts:
-      - author.zip
-      name: author
+      - comcapprojectauthors.zip
+      name: comcapprojectauthors
       target-path: resources/
-- name: author
+- name: comcapprojectauthors
   type: html5
-  path: app/author
+  path: app/authors
   build-parameters:
     build-result: dist
     builder: custom
@@ -95,11 +65,17 @@ resources:
   parameters:
     service: hana
     service-plan: hdi-shared
+- name: capProject-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: capProject-html5-service
+    service-plan: app-host
 - name: capProject-destination-service
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: true
+      HTML5Runtime_enabled: false
       init_data:
         instance:
           destinations:
@@ -113,19 +89,6 @@ resources:
     service: destination
     service-name: capProject-destination-service
     service-plan: lite
-- name: capProject_html_repo_host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: capProject-html5-app-host-service
-    service-plan: app-host
-- name: uaa_capProject
-  type: org.cloudfoundry.managed-service
-  parameters:
-    path: ./xs-security.json
-    service: xsuaa
-    service-name: capProject-xsuaa-service
-    service-plan: application
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

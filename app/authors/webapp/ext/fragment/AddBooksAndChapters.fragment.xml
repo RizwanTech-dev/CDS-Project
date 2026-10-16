@@ -1,0 +1,80 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="addBooksAndChapters"
+        title="Books"
+        contentWidth="400px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+            <f:SimpleForm
+                id="chapterForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="4"
+                labelSpanM="4"
+                labelSpanS="12"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1">
+
+                <f:content>
+                    <Label id="books" text="Books" required="true"/>
+                    <Input
+                        id="bookTitle"
+                        placeholder="add Book title"
+                        value="{booksDialogMdl>/title}"
+                        maxLength="100"
+                        valueLiveUpdate="true"
+                        liveChange=".onBookTitleLiveChange"/>
+                    <Input
+                        id="bookType"
+                        placeholder="add Book Type"
+                        value="{booksDialogMdl>/type}"
+                        maxLength="100"
+                        valueLiveUpdate="true"
+                        liveChange=".onBookTypeLiveChange"/>
+                    <Input
+                        id="bookCost"
+                        placeholder="add Book Cost"
+                        value="{booksDialogMdl>/cost}"
+                        maxLength="100"
+                        valueLiveUpdate="true"
+                        liveChange=".onBookCostLiveChange"/>
+                    <Input
+                        id="bookCurrency"
+                        placeholder="add Book currency"
+                        value="{booksDialogMdl>/currency}"
+                        maxLength="100"
+                        valueLiveUpdate="true"
+                        liveChange=".onBookCurrencyLiveChange"/>
+
+
+
+                        
+                </f:content>
+
+            </f:SimpleForm>
+        </content>
+
+        <buttons>
+            <Button
+                id="saveChapterBtn"
+                text="Save"
+                type="Emphasized"
+                enabled="{booksDialogMdl>/isValid}"
+                press=".onSaveDialog"/>
+            <Button
+                id="cancelChapterBtn"
+                text="Cancel"
+                press=".onCloseDialog"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>
