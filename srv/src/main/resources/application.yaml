@@ -13,6 +13,17 @@ cds:
     auto-config:
       enabled: false
 ---
+spring:
+  config.activate.on-profile: cloud
+cds:
+  data-source:
+    auto-config:
+      enabled: true
+  security:
+    authentication:
+      authConfig:
+        enabled: true
+---
 management:
   endpoint:
     health:
